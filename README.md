@@ -27,4 +27,4 @@
 ## Observações
 O mongoDB deve estar ospedado na porta: ```mongodb://localhost:27017/```.
 
-<p>Este projeto está sobre a [Licensa MIT](./LICENSE)</p>
+Este projeto está sobre a [Licensa MIT](./LICENSE)
