@@ -1,0 +1,5 @@
+# pastas
+node_modules/
+
+# arquivos
+.DS_Store
