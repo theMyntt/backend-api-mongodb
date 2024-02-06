@@ -2,21 +2,27 @@ const express = require("express");
 const mongoose = require("mongoose");
 // const data = require("./data");s
 const collection = require("./data");
+const crypto = require("crypto-js")
 
 const app = express();
 const port = 3000;
+const routes = {
+  1: {path: "/"},
+  2: {path: "/api/signup"},
+  3: {path: "/api/signin"}
+}
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("hello world");
+app.get(routes[1].path, (req, res) => {
+  res.send("GET /");
 });
 
-app.post("/api/signup", async (req, res) => {
+app.post(routes[2].path, async (req, res) => {
   const postData = {
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
+    password: crypto.SHA256(req.body.password).toString(),
   };
 
   await collection.insertMany([postData]);
@@ -24,12 +30,13 @@ app.post("/api/signup", async (req, res) => {
   res.send(JSON.stringify("Inserido."))
 });
 
-app.post("/api/signin", async (req, res) => {
+app.post(routes[3].path, async (req, res) => {
   const postData = {
     email: req.body.email,
-    password: req.body.password,
+    password: crypto.SHA256(req.body.password).toString(),
   };
 
+  console.log(postData.password);
   const check = await collection.findOne({ email: postData.email });
 
   if (postData.password === check.password) {
