@@ -21,10 +21,11 @@ app.get(routes[1].path, (req, res) => {
 app.post(routes[2].path, async (req, res) => {
   const postData = {
     name: req.body.name,
-    email: req.body.email,
+    email: req.body.email.toLowerCase(),
     password: crypto.SHA256(req.body.password).toString(),
   };
 
+  console.log(postData.email);
   await collection.insertMany([postData]);
 
   res.send(JSON.stringify("Inserido."))
@@ -32,11 +33,11 @@ app.post(routes[2].path, async (req, res) => {
 
 app.post(routes[3].path, async (req, res) => {
   const postData = {
-    email: req.body.email,
+    email: req.body.email.toLowerCase(),
     password: crypto.SHA256(req.body.password).toString(),
   };
 
-  console.log(postData.password);
+  // console.log(postData.email);
   const check = await collection.findOne({ email: postData.email });
 
   if (postData.password === check.password) {
