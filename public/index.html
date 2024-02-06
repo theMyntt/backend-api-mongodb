@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      header {
+        height: 300px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      main div {
+        margin-bottom: 10px;
+      }
+      main div:last-child {
+        margin: 0;
+      }
+      .flex {
+        display: flex;
+      }
+      .justify {
+        justify-content: space-between;
+      }
+      .post {
+        display: flex;
+        width: 70px;
+        height: 40px;
+        color: #fff;
+        align-items: center;
+        justify-content: center;
+        background-color: #f00;
+        border-radius: 7.5px;
+      }
+      @media (min-width: 768px) {
+        #wrapper {
+          width: 65%;
+          margin: 0 auto;
+        }
+      }
+    </style>
+    <title>backend-api-mongodb</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header class="flex">
+        <h1>backend-api-mongodb</h1>
+        <p>Made by <a href="https://github.com/themyntt/backend-api-mongodb">theMyntt</a></p>
+      </header>
+      <main>
+        <div class="flex justify">
+          <div class="post" style="background-color: rgb(5, 184, 5);">GET</div>
+          <p>/</p>
+        </div>
+        <div class="flex justify">
+          <div class="post">POST</div>
+          <p>/api/signup</p>
+        </div>
+        <div class="flex justify">
+          <div class="post">POST</div>
+          <p>/api/signin</p>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

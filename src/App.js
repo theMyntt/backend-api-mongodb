@@ -1,21 +1,21 @@
 const express = require("express");
-const mongoose = require("mongoose");
-// const data = require("./data");s
 const collection = require("./data");
-const crypto = require("crypto-js")
+const crypto = require("crypto-js");
+const path = require("path");
 
 const app = express();
 const port = 3000;
 const routes = {
-  1: {path: "/"},
-  2: {path: "/api/signup"},
-  3: {path: "/api/signin"}
-}
+  1: { path: "/" },
+  2: { path: "/api/signup" },
+  3: { path: "/api/signin" },
+};
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.get(routes[1].path, (req, res) => {
-  res.send("GET /");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.post(routes[2].path, async (req, res) => {
@@ -25,10 +25,12 @@ app.post(routes[2].path, async (req, res) => {
     password: crypto.SHA256(req.body.password).toString(),
   };
 
-  // console.log(postData.email);
-  await collection.insertMany([postData]);
-
-  res.send(JSON.stringify("Inserido."))
+  try {
+    await collection.insertMany([postData]);
+    res.status(200).json("Cadastrado");
+  } catch (error) {
+    res.status(500).json("Erro interno");
+  }
 });
 
 app.post(routes[3].path, async (req, res) => {
@@ -37,16 +39,20 @@ app.post(routes[3].path, async (req, res) => {
     password: crypto.SHA256(req.body.password).toString(),
   };
 
-  // console.log(postData.email);
-  const check = await collection.findOne({ email: postData.email });
+  try {
+    const check = await collection.findOne({ email: postData.email });
 
-  if (postData.password === check.password) {
-    res.send(JSON.stringify(check));
-  }else {
-    res.send("Error.")
+    if (postData.password === check.password) {
+      res.status(200).json(check);
+    } else {
+      res.status(404).json("Usuário ou senha errados/inexistentes");
+    }
+  } catch (error) {
+    res.status(500).json("Erro ao pesquisar.")
   }
-})
+
+});
 
 app.listen(port, () => {
-  console.log("Porta conectada em: " + port);
+  console.log("Porta conectada em: localhost:" + port);
 });
