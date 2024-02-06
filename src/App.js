@@ -25,7 +25,7 @@ app.post(routes[2].path, async (req, res) => {
     password: crypto.SHA256(req.body.password).toString(),
   };
 
-  console.log(postData.email);
+  // console.log(postData.email);
   await collection.insertMany([postData]);
 
   res.send(JSON.stringify("Inserido."))
