@@ -26,5 +26,5 @@ const schema = new mongoose.Schema({
   },
 });
 
-const collection = mongoose.model("info", schema);
+const collection = mongoose.model("infos", schema);
 module.exports = collection;
